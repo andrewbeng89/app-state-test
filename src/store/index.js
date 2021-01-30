@@ -14,10 +14,6 @@ const initialState = reactive({
   counter: 0
 });
 
-export const getInitialState = () => ({
-  counter: 0
-});
-
 export const action = (state, { type }) => {
   switch (type) {
     case 'INCREMENT':
