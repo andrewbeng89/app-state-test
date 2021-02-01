@@ -1,27 +1,38 @@
-import { reactive } from 'vue';
+import { reactive, readonly } from 'vue';
 
-export const useAction = ({ action, initialState }) => {
-  const state = reactive(initialState);
+/* State and actions declaration */
 
-  const dispatch = (actionPayload) => {
-    action(state, actionPayload);
+const state = {
+  counter: 0
+};
+
+const actions = {
+  increment: state => {
+    state.counter += 1;
+  }
+};
+
+/* Utilities to wire global store reactivity */
+
+const useState = state => 
+  reactive(state);
+
+export const useActions = ({ actions, initialState }) => {
+  const state = readonly(initialState);
+  
+  const dispatch = (actionName, actionPayload) => {
+    actions[actionName]?.(initialState, actionPayload);
   }
 
   return { state, dispatch }
 };
 
-const initialState = reactive({
-  counter: 0
-});
+export const useStore = ({ state, actions }) => {
+  const initialState = useState(state);
 
-export const action = (state, { type }) => {
-  switch (type) {
-    case 'INCREMENT':
-      state.counter += 1;
-      break;
-  }
-}
+  return useActions({ actions, initialState });
+};
 
-export const useStore = () => {
-  return useAction({ action, initialState });
-}
+/* Export global store instance */
+
+export default useStore({ state, actions });
