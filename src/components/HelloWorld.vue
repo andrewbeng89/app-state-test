@@ -2,12 +2,13 @@
   <div class="hello">
     <h1>Local Component</h1>
     <h2>{{ state.counter }}</h2>
-    <button @click="dispatch({ type: 'INCREMENT' })">INCREMENT</button>
+    <button @click="increment()">INCREMENT</button>
+    <!-- <button @click="state.counter += 1">INCREMENT</button> -->
   </div>
 </template>
 
 <script>
-import { useStore } from '../store';
+import store from '../store';
 
 export default {
   name: 'HelloWorld',
@@ -15,9 +16,13 @@ export default {
     msg: String
   },
   setup() {
-    const { state, dispatch } = useStore();
+    const { state, dispatch } = store;
 
-    return { state, dispatch };
+    const increment = () => {
+      dispatch("increment");
+    };
+
+    return { state, increment };
   }
 }
 </script>

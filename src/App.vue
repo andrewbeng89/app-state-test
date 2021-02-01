@@ -5,7 +5,7 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import { useStore } from "./store";
+import store from "./store";
 
 export default {
   name: 'App',
@@ -13,7 +13,7 @@ export default {
     HelloWorld
   },
   setup() {
-    const { state } = useStore();
+    const { state } = store;
 
     return { state };
   }
