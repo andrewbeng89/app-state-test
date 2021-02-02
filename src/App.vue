@@ -1,6 +1,7 @@
 <template>
   global state: {{ state.counter }}
   <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <button @click="foo.dispatch('setBar', 'foobar')">TEST</button>
 </template>
 
 <script>
@@ -13,9 +14,9 @@ export default {
     HelloWorld
   },
   setup() {
-    const { state } = store;
+    const { state, dispatch, foo } = store;
 
-    return { state };
+    return { state, foo, dispatch };
   }
 }
 </script>
